@@ -3,9 +3,9 @@
 
 	<parent>
 		<groupId>nl.topicus.onderwijs</groupId>
-		<artifactId>onderwijs-parent</artifactId>
+		<artifactId>onderwijs-maven-plugin-parent</artifactId>
 		<version>2012.2.145</version>
-		<relativePath/>
+		<relativePath />
 	</parent>
 
 	<groupId>nl.topicus.onderwijs.maven</groupId>
@@ -33,26 +33,39 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.maven.enforcer</groupId>
+				<artifactId>enforcer-api</artifactId>
+				<version>1.4.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-container-default</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.shared</groupId>
+				<artifactId>maven-dependency-tree</artifactId>
+				<version>2.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
-			<version>3.3.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.enforcer</groupId>
 			<artifactId>enforcer-api</artifactId>
-			<version>1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-dependency-tree</artifactId>
-			<version>2.2</version>
 		</dependency>
 	</dependencies>
 </project>
