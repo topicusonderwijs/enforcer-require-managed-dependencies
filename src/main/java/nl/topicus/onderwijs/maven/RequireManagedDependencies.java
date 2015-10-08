@@ -36,7 +36,7 @@ public class RequireManagedDependencies implements EnforcerRule {
 		try {
 			DependencyNode node = getNode(helper);
 			UnmanagedDependencyCollector visitor = new UnmanagedDependencyCollector(
-					(MavenProject) helper.evaluate("${project}"));
+					(MavenProject) helper.evaluate("${project}"), node);
 			node.accept(visitor);
 			boolean fail = false;
 			for (CharSequence unmanaged : visitor.getUnmanagedDependencies()) {
