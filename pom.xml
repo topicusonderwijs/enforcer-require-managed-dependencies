@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -47,9 +48,29 @@
 				</exclusions>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.maven.enforcer</groupId>
+				<artifactId>enforcer-rules</artifactId>
+				<version>1.4.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-container-default</artifactId>
+					</exclusion>
+					<exclusion>
+						<artifactId>maven-project</artifactId>
+						<groupId>org.apache.maven</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.maven.shared</groupId>
 				<artifactId>maven-dependency-tree</artifactId>
 				<version>2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.aether</groupId>
+				<artifactId>aether-util</artifactId>
+				<version>1.0.2.v20150114</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -62,6 +83,10 @@
 		<dependency>
 			<groupId>org.apache.maven.enforcer</groupId>
 			<artifactId>enforcer-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.enforcer</groupId>
+			<artifactId>enforcer-rules</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
