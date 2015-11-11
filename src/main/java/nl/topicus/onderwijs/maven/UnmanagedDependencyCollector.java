@@ -26,8 +26,10 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 
 	private EnforcerRuleException storedException;
 
+	private List<String> includedScopes;
+
 	public UnmanagedDependencyCollector(MavenProject project, DependencyNode root,
-			List<String> excludes)
+			List<String> excludes, List<String> includedScopes)
 	{
 		if (project.getDependencyManagement() == null)
 			managedDependencies = Collections.emptySet();
@@ -37,6 +39,7 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 					.map(Dependency::getManagementKey).collect(Collectors.toSet());
 		this.root = root;
 		this.excludes = excludes;
+		this.includedScopes = includedScopes;
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 
 		try
 		{
-			if (matchesExclude(node))
+			if (matchesExclude(node) || !scopeIncluded(node))
 				return true;
 		}
 		catch (InvalidVersionSpecificationException e)
@@ -72,6 +75,11 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 		return false;
 	}
 
+	private boolean scopeIncluded(DependencyNode node)
+	{
+		return includedScopes.contains(node.getArtifact().getScope());
+	}
+
 	@Override
 	public boolean endVisit(DependencyNode node)
 	{
@@ -86,15 +94,5 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 	public EnforcerRuleException getStoredException()
 	{
 		return storedException;
-	}
-
-	public List<String> getExcludes()
-	{
-		return excludes;
-	}
-
-	public void setExcludes(List<String> excludes)
-	{
-		this.excludes = excludes;
 	}
 }

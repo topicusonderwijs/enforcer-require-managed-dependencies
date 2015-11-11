@@ -1,5 +1,7 @@
 package nl.topicus.onderwijs.maven;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.maven.enforcer.rule.api.EnforcerRule;
@@ -14,7 +16,9 @@ import org.codehaus.plexus.component.repository.exception.ComponentLookupExcepti
 
 public class RequireManagedDependencies implements EnforcerRule
 {
-	private List<String> excludes;
+	private List<String> excludes = new ArrayList<>();
+
+	private String includedScopes = "compile,provided,runtime,test,system,import";
 
 	private DependencyNode getNode(EnforcerRuleHelper helper) throws EnforcerRuleException
 	{
@@ -49,10 +53,11 @@ public class RequireManagedDependencies implements EnforcerRule
 		try
 		{
 			helper.getLog().debug("RequireManagedDependencies excluding " + excludes);
+			helper.getLog().debug("RequireManagedDependencies with scopes " + includedScopes);
 			DependencyNode node = getNode(helper);
 			UnmanagedDependencyCollector visitor =
 				new UnmanagedDependencyCollector((MavenProject) helper.evaluate("${project}"),
-					node, excludes);
+					node, excludes, Arrays.asList(includedScopes.split(",")));
 			if (!node.accept(visitor))
 			{
 				throw visitor.getStoredException();
