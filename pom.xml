@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>nl.topicus.onderwijs</groupId>
-		<artifactId>onderwijs-maven-plugin-parent</artifactId>
-		<version>2012.2.145</version>
+		<groupId>nl.topicus.onderwijs.parent</groupId>
+		<artifactId>onderwijs-parent-base</artifactId>
+		<version>2018.2.2</version>
 		<relativePath />
 	</parent>
 
@@ -23,12 +23,12 @@
 		<repository>
 			<id>topicus-repo</id>
 			<name>topicus-repo.local-releases</name>
-			<url>http://repo-onderwijs.topicus.local/artifactory/libs-releases-local</url>
+			<url>https://repo.topicusonderwijs.nl/artifactory/libs-releases-local</url>
 			<uniqueVersion>false</uniqueVersion>
 		</repository>
 		<snapshotRepository>
 			<id>topicus-repo</id>
-			<url>http://repo-onderwijs.topicus.local/artifactory/libs-snapshots-local</url>
+			<url>https://repo.topicusonderwijs.nl/artifactory/libs-snapshots-local</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
@@ -52,12 +52,24 @@
 				<version>1.4.1</version>
 				<exclusions>
 					<exclusion>
+						<groupId>org.apache.maven</groupId>
+						<artifactId>maven-project</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.maven.shared</groupId>
+						<artifactId>maven-common-artifact-filters</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.beanshell</groupId>
+						<artifactId>bsh</artifactId>
+					</exclusion>
+					<exclusion>
 						<groupId>org.codehaus.plexus</groupId>
 						<artifactId>plexus-container-default</artifactId>
 					</exclusion>
 					<exclusion>
-						<artifactId>maven-project</artifactId>
-						<groupId>org.apache.maven</groupId>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-i18n</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -65,11 +77,6 @@
 				<groupId>org.apache.maven.shared</groupId>
 				<artifactId>maven-dependency-tree</artifactId>
 				<version>2.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.aether</groupId>
-				<artifactId>aether-util</artifactId>
-				<version>1.0.2.v20150114</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

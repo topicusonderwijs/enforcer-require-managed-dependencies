@@ -32,18 +32,18 @@ public class RequireManagedDependencies implements EnforcerRule
 		}
 		catch (ExpressionEvaluationException e)
 		{
-			throw new EnforcerRuleException("Unable to lookup an expression "
-				+ e.getLocalizedMessage(), e);
+			throw new EnforcerRuleException(
+				"Unable to lookup an expression " + e.getLocalizedMessage(), e);
 		}
 		catch (ComponentLookupException e)
 		{
-			throw new EnforcerRuleException("Unable to lookup a component "
-				+ e.getLocalizedMessage(), e);
+			throw new EnforcerRuleException(
+				"Unable to lookup a component " + e.getLocalizedMessage(), e);
 		}
 		catch (DependencyGraphBuilderException e)
 		{
-			throw new EnforcerRuleException("Could not build dependency graph "
-				+ e.getLocalizedMessage(), e);
+			throw new EnforcerRuleException(
+				"Could not build dependency graph " + e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -56,8 +56,8 @@ public class RequireManagedDependencies implements EnforcerRule
 			helper.getLog().debug("RequireManagedDependencies with scopes " + includedScopes);
 			DependencyNode node = getNode(helper);
 			UnmanagedDependencyCollector visitor =
-				new UnmanagedDependencyCollector((MavenProject) helper.evaluate("${project}"),
-					node, excludes, Arrays.asList(includedScopes.split(",")));
+				new UnmanagedDependencyCollector((MavenProject) helper.evaluate("${project}"), node,
+					excludes, Arrays.asList(includedScopes.split(",")));
 			if (!node.accept(visitor))
 			{
 				throw visitor.getStoredException();
@@ -71,8 +71,8 @@ public class RequireManagedDependencies implements EnforcerRule
 			}
 			if (fail)
 			{
-				throw new EnforcerRuleException("Failed while enforcing releasability. "
-					+ "See above detailed error message.");
+				throw new EnforcerRuleException(
+					"Failed while enforcing releasability. " + "See above detailed error message.");
 			}
 		}
 		catch (Exception e)
