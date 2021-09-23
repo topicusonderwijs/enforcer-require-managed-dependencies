@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>nl.topicus.onderwijs.parent</groupId>
 		<artifactId>onderwijs-parent-base</artifactId>
-		<version>2018.2.2</version>
+		<version>2021.9.3</version>
 		<relativePath />
 	</parent>
 
@@ -38,7 +38,7 @@
 			<dependency>
 				<groupId>org.apache.maven.enforcer</groupId>
 				<artifactId>enforcer-api</artifactId>
-				<version>1.4.1</version>
+				<version>3.0.0</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.codehaus.plexus</groupId>
@@ -49,7 +49,7 @@
 			<dependency>
 				<groupId>org.apache.maven.enforcer</groupId>
 				<artifactId>enforcer-rules</artifactId>
-				<version>1.4.1</version>
+				<version>3.0.0</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.apache.maven</groupId>
@@ -60,7 +60,7 @@
 						<artifactId>maven-common-artifact-filters</artifactId>
 					</exclusion>
 					<exclusion>
-						<groupId>org.beanshell</groupId>
+						<groupId>org.apache-extras.beanshell</groupId>
 						<artifactId>bsh</artifactId>
 					</exclusion>
 					<exclusion>
@@ -76,7 +76,13 @@
 			<dependency>
 				<groupId>org.apache.maven.shared</groupId>
 				<artifactId>maven-dependency-tree</artifactId>
-				<version>2.2</version>
+				<version>3.1.0</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.eclipse.aether</groupId>
+						<artifactId>aether-util</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

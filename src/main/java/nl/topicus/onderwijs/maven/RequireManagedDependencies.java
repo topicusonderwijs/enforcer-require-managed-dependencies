@@ -7,7 +7,10 @@ import java.util.List;
 import org.apache.maven.enforcer.rule.api.EnforcerRule;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleHelper;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.project.DefaultProjectBuildingRequest;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectBuildingRequest;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilder;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilderException;
 import org.apache.maven.shared.dependency.graph.DependencyNode;
@@ -25,9 +28,13 @@ public class RequireManagedDependencies implements EnforcerRule
 		try
 		{
 			MavenProject project = (MavenProject) helper.evaluate("${project}");
+			MavenSession session = (MavenSession) helper.evaluate("${session}");
 			DependencyGraphBuilder dependencyTreeBuilder =
-				(DependencyGraphBuilder) helper.getComponent(DependencyGraphBuilder.class);
-			DependencyNode node = dependencyTreeBuilder.buildDependencyGraph(project, null);
+				helper.getComponent(DependencyGraphBuilder.class);
+			ProjectBuildingRequest buildingRequest =
+				new DefaultProjectBuildingRequest(session.getProjectBuildingRequest());
+			buildingRequest.setProject(project);
+			DependencyNode node = dependencyTreeBuilder.buildDependencyGraph(buildingRequest, null);
 			return node;
 		}
 		catch (ExpressionEvaluationException e)
@@ -72,7 +79,7 @@ public class RequireManagedDependencies implements EnforcerRule
 			if (fail)
 			{
 				throw new EnforcerRuleException(
-					"Failed while enforcing releasability. " + "See above detailed error message.");
+					"Failed while enforcing releasability. See above detailed error message.");
 			}
 		}
 		catch (Exception e)
