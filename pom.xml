@@ -10,13 +10,13 @@
 
 	<groupId>nl.topicus.onderwijs.maven</groupId>
 	<artifactId>require-managed-dependencies</artifactId>
-	<version>1.6-SNAPSHOT</version>
+	<version>1.6</version>
 	<packaging>jar</packaging>
 
 	<scm>
 		<url>https://github.com/topicusonderwijs/enforcer-require-managed-dependencies</url>
 		<connection>scm:git:git@github.com:topicusonderwijs/enforcer-require-managed-dependencies.git</connection>
-		<tag>HEAD</tag>
+		<tag>require-managed-dependencies-1.6</tag>
 	</scm>
 
 	<distributionManagement>
