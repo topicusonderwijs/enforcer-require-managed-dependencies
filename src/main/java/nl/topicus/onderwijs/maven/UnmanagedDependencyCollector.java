@@ -6,10 +6,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
+import org.apache.maven.enforcer.rules.utils.ArtifactMatcher;
 import org.apache.maven.model.Dependency;
-import org.apache.maven.plugins.enforcer.utils.ArtifactMatcher;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.graph.DependencyNode;
 import org.apache.maven.shared.dependency.graph.traversal.DependencyNodeVisitor;
@@ -34,9 +33,11 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 		if (project.getDependencyManagement() == null)
 			managedDependencies = Collections.emptySet();
 		else
-			managedDependencies =
-				project.getDependencyManagement().getDependencies().stream()
-					.map(Dependency::getManagementKey).collect(Collectors.toSet());
+			managedDependencies = project.getDependencyManagement()
+				.getDependencies()
+				.stream()
+				.map(Dependency::getManagementKey)
+				.collect(Collectors.toSet());
 		this.root = root;
 		this.excludes = excludes;
 		this.includedScopes = includedScopes;
@@ -48,23 +49,15 @@ public class UnmanagedDependencyCollector implements DependencyNodeVisitor
 		if (node.equals(root))
 			return true;
 
-		try
-		{
-			if (matchesExclude(node) || !scopeIncluded(node))
-				return true;
-		}
-		catch (InvalidVersionSpecificationException e)
-		{
-			storedException = new EnforcerRuleException("Invalid Version Range: ", e);
-			return false;
-		}
+		if (matchesExclude(node) || !scopeIncluded(node))
+			return true;
 
 		if (!managedDependencies.contains(node.getArtifact().getDependencyConflictId()))
 			unmanagedDependencies.add(node.toNodeString());
 		return true;
 	}
 
-	private boolean matchesExclude(DependencyNode node) throws InvalidVersionSpecificationException
+	private boolean matchesExclude(DependencyNode node)
 	{
 		for (String curExclude : excludes)
 		{
